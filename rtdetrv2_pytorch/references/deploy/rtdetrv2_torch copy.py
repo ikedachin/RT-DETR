@@ -19,14 +19,14 @@ def draw(images, labels, boxes, scores, thrh = 0.6):
     for i, im in enumerate(images):
         draw = ImageDraw.Draw(im)
 
-        scr = scores[i].detach().cpu()
-        lab = labels[i][scr > thrh].detach().cpu()
-        box = boxes[i][scr > thrh].detach().cpu()
-        scrs = scores[i][scr > thrh].detach().cpu()
+        scr = scores[i]
+        lab = labels[i][scr > thrh]
+        box = boxes[i][scr > thrh]
+        scrs = scores[i][scr > thrh]
 
         for j,b in enumerate(box):
-            draw.rectangle(list(b.numpy()), outline='red',)
-            draw.text((b[0].item(), b[1].item()), text=f"{lab[j].item()} {round(scrs[j].item(),2)}", fill='blue', )
+            draw.rectangle(list(b), outline='red',)
+            draw.text((b[0], b[1]), text=f"{lab[j].item()} {round(scrs[j].item(),2)}", fill='blue', )
 
         im.save(f'results_{i}.jpg')
 
@@ -60,7 +60,6 @@ def main(args, ):
             return outputs
 
     model = Model().to(args.device)
-    model.eval()  # Set model to evaluation mode
 
     im_pil = Image.open(args.im_file).convert('RGB')
     w, h = im_pil.size
@@ -72,9 +71,7 @@ def main(args, ):
     ])
     im_data = transforms(im_pil)[None].to(args.device)
 
-    with torch.no_grad():  # Disable gradient computation for inference
-        output = model(im_data, orig_size)
-    
+    output = model(im_data, orig_size)
     labels, boxes, scores = output
 
     draw([im_pil], labels, boxes, scores)
