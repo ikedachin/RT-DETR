@@ -7,7 +7,7 @@
 画像に対して物体検出を実行する場合は、`rtdetrv2_torch.py` を使用します:
 
 ```bash
-python rtdetrv2_pytorch/references/deploy/rtdetrv2_torch.py -c rtdetrv2_pytorch/configs/rtdetrv2/rtdetrv2_r18vd_120e_coco.yml -r rtdetrv2_pytorch/output/rtdetrv2_r18vd_120e_coco/last.pth -f path/to/your/image.jpg -d cuda:0
+python rtdetrv2_pytorch/references/deploy/rtdetrv2_torch.py -c rtdetrv2_pytorch/configs/rtdetrv2/rtdetrv2_r18vd_120e_coco.yml -r rtdetrv2_pytorch/output/rtdetrv2_r18vd_120e_coco/last.pth -f path/to/your/image.jpg -d cuda:0 -o output -t coco_dataset/annotations/instances_train.json
 ```
 
 ### パラメータ説明:
@@ -15,9 +15,11 @@ python rtdetrv2_pytorch/references/deploy/rtdetrv2_torch.py -c rtdetrv2_pytorch/
 - `-r`: 学習済みモデル(checkpoint)のパス
 - `-f`: 推論対象の画像ファイルのパス
 - `-d`: 使用するデバイス(`cuda:0` または `cpu`)
+- `-o`: 出力ディレクトリのパス(デフォルト: `output`)
+- `-t`: 学習設定ファイル(クラス名表示用、オプション)
 
 ### 実行結果:
-検出結果が `results_0.jpg` として保存されます。
+検出結果が指定した出力ディレクトリに `<入力の画像ファイル名>` として保存されます。バウンディングボックスの上側に、黒い縁取りと白い文字で中抜き文字としてクラス名とスコアが表示されます。
 
 ## 2. 評価(Evaluation)を実行する
 
