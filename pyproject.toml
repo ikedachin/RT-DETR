@@ -1,0 +1,27 @@
+[project]
+name = "rt-detr"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "faster-coco-eval>=1.6.6",
+    "ipykernel>=7.1.0",
+    "onnx>=1.20.0",
+    "onnxruntime-gpu>=1.23.2",
+    "opencv-python>=4.12.0.88",
+    "pandas>=2.3.3",
+    "pillow>=12.0.0",
+    "pycocotools>=2.0.10",
+    "pyyaml>=6.0.3",
+    "scipy>=1.16.3",
+    "tensorboard>=2.20.0",
+    "torch>=2.0.1",
+    "torchvision>=0.15.2",
+    "tqdm>=4.67.1",
+]
+
+[tool.uv.workspace]
+members = [
+    "rtdetrv2_pytorch",
+]
